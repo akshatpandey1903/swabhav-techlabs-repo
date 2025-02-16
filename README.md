@@ -1,6 +1,6 @@
 # Java Training - Eclipse Workspace
 
-This repository serves as my complete Eclipse workspace for Java training at Swabhav Techlabs. It includes all my projects, assignments, and practice exercises.
+This repository contains all my Java projects and exercises from training at Swabhav Techlabs, organized as an Eclipse workspace.
 
 ## Repository Structure
 
@@ -35,7 +35,7 @@ This repository serves as my complete Eclipse workspace for Java training at Swa
 ## How to Use
 1. Clone this repository:
    ```sh
-   git clone https://github.com/your-username/java-training-workspace.git
+   git clone https://github.com/akshatpandey1903/swabhav-techlabs-repo.git
    ```
 2. Open Eclipse and import the project.
 3. Navigate to the `src` folder to explore code.
