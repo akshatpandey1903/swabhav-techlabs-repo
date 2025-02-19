@@ -51,6 +51,7 @@ public class AccountTest {
 					System.out.println("already added");
 					break;
 				}
+				sms = true;
 				account.registerNotifier("sms", account);
 				System.out.println("Success");
 			break;
@@ -59,6 +60,7 @@ public class AccountTest {
 					System.out.println("already added");
 					break;
 				}
+				whatsapp = true;
 				account.registerNotifier("whatsapp", account);
 				System.out.println("Success");
 			break;
@@ -67,6 +69,7 @@ public class AccountTest {
 					System.out.println("already added");
 					break;
 				}
+				email = true;
 				account.registerNotifier("email", account);
 				System.out.println("Success");
 			break;
