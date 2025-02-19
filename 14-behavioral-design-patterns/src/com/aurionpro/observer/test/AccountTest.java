@@ -21,6 +21,7 @@ public class AccountTest {
 		try {
 			account.withdraw(300);
 		} catch(InsufficientFundsException e) {
+			
 			System.out.println("Error: " + e.getMessage());
 		}
 		
