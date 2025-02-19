@@ -56,22 +56,22 @@ public class HatTest {
 
 		    switch (choice) {
 		    	case 1:
-		    		if (!hasGoldenHat) {
-		    			decoratedHat = new GoldenHat(hat);
-		                hat = decoratedHat;
-		                hasGoldenHat = true;
-		            } else {
-		            	System.out.println("You have already selected golden color");
-		            }
+		    		if (hasGoldenHat) {
+		    			System.out.println("You have already selected golden color");
+		    			break;
+		            } 	
+		            decoratedHat = new GoldenHat(hat);
+		            hat = decoratedHat;
+		            hasGoldenHat = true;
 		    		break;
 		    	case 2:
-		    		if (!hasRibbonedHat) {
-		    			decoratedHat = new RibbonedHat(hat);
-		    			hat = decoratedHat;
-		    			hasRibbonedHat = true;
-		    		} else {
+		    		if (hasRibbonedHat) {
 		    			System.out.println("Ribbons have already added!");
+		    			break;
 		    		}
+		    		decoratedHat = new RibbonedHat(hat);
+		    		hat = decoratedHat;
+		    		hasRibbonedHat = true;
 		    		break;
 		    	case 3:
 		    		return decoratedHat != null ? decoratedHat : hat;
