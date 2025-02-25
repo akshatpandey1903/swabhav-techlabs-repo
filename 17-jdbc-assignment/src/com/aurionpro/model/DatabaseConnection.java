@@ -11,7 +11,7 @@ public class DatabaseConnection {
 	
 	private final String url = "jdbc:mysql://localhost:3306/college";
 	private final String user = "root";
-	private final String password = "Manu+Mon1";
+	private final String password = "PASSWORD";
 	
 	
 	private DatabaseConnection() {
