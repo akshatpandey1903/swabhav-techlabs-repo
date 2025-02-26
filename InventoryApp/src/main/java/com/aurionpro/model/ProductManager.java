@@ -39,8 +39,13 @@ public class ProductManager {
     }
 
     public void deleteProduct(int id) {
-        products.removeIf(p -> p.getId() == id);
+        boolean removed = products.removeIf(p -> p.getId() == id);
+        if(removed == false) {
+        	System.out.println("Product not found");
+        	return;
+        }
         FileHandler.saveToFile(filePath, products, p -> p.getId() + "," + p.getName() + "," + p.getDescription() + "," + p.getQuantity() + "," + p.getPrice());
+        System.out.println("Product deleted successfully!");
     }
 
     public List<Product> getAllProducts() {

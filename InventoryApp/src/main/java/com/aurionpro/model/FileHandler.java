@@ -13,6 +13,14 @@ import java.util.function.Function;
 public class FileHandler {
 	
 	public static <T> void saveToFile(String fileName, List<T> Items, Function<T, String>formatter) {
+		File file = new File(fileName);
+		try {
+			if(!file.exists()) {
+				file.createNewFile();
+			}
+		} catch(IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(fileName));
@@ -82,7 +90,7 @@ public class FileHandler {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+        	System.out.println("Error: " + e.getMessage());
         }
         return suppliers;
     }
@@ -114,7 +122,7 @@ public class FileHandler {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+        	System.out.println("Error: " + e.getMessage());
         }
         return transactions;
     }
