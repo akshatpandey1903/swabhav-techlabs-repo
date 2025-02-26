@@ -3,6 +3,8 @@ package com.aurionpro.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aurionpro.exceptions.InvalidProductIdException;
+
 public class ProductManager {
     private List<Product> products;
     private static String filePath = "C:\\Users\\Akshat.Pandey\\Desktop\\akJava\\InventoryApp\\src\\products.txt";
@@ -15,27 +17,36 @@ public class ProductManager {
         int id = IdManager.getNextId("product");
         Product product = new Product(id, name, description, quantity, price);
         products.add(product);
-        FileHandler.saveToFile(filePath, products, p -> p.getId() + "," + p.getName() + "," + p.getDescription() + "," + p.getQuantity() + "," + p.getPrice());
+        saveProducts();
     }
 
-    public Product getProductById(int id) {
+    public Product getProductById(int id) throws InvalidProductIdException {
         for(Product product : products) {
         	if(product.getId() == id) {
         		return product;
         	}
         }
-        return null;
+        throw new InvalidProductIdException();
+    }
+    public void getSingleProduct(int id) throws InvalidProductIdException {
+    	 System.out.println(getProductById(id));
     }
 
     public void updateProduct(int id, String name, String description, int quantity, double price) {
-        Product product = getProductById(id);
-        if (product != null) {
-            product.setName(name);
-            product.setDescription(description);
-            product.setQuantity(quantity);
-            product.setPrice(price);
-            FileHandler.saveToFile(filePath, products, p -> p.getId() + "," + p.getName() + "," + p.getDescription() + "," + p.getQuantity() + "," + p.getPrice());
-        }
+        Product product;
+		try {
+			product = getProductById(id);
+			if (product != null) {
+	            product.setName(name);
+	            product.setDescription(description);
+	            product.setQuantity(quantity);
+	            product.setPrice(price);
+	            saveProducts();
+	        }
+		} catch (InvalidProductIdException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error: " + e.getMessage());
+		}
     }
 
     public void deleteProduct(int id) {
@@ -44,13 +55,19 @@ public class ProductManager {
         	System.out.println("Product not found");
         	return;
         }
-        FileHandler.saveToFile(filePath, products, p -> p.getId() + "," + p.getName() + "," + p.getDescription() + "," + p.getQuantity() + "," + p.getPrice());
+        saveProducts();
         System.out.println("Product deleted successfully!");
     }
 
     public List<Product> getAllProducts() {
         return new ArrayList<>(products);
     }
+    
+    public void saveProducts() {
+        FileHandler.saveToFile(filePath, products, 
+            p -> p.getId() + "," + p.getName() + "," + p.getDescription() + "," + p.getQuantity() + "," + p.getPrice());
+    }
+
 }
 
 
