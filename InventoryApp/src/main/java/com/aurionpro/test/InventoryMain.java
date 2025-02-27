@@ -1,10 +1,10 @@
 package com.aurionpro.test;
 
-import com.aurionpro.model.InventoryMenu;
+import com.aurionpro.model.InventoryFacade;
 
 public class InventoryMain {
 	public static void main(String[] args) {
-		InventoryMenu menu = new InventoryMenu();
+		InventoryFacade menu = new InventoryFacade();
 		menu.showMenu();
 	}
 }

@@ -9,7 +9,7 @@ import com.aurionpro.exceptions.InvalidProductIdException;
 public class TransactionManager {
     private List<Transaction> transactions;
     private ProductManager productManager;
-    private static final String transactionFilePath = "C:\\Users\\Akshat.Pandey\\Desktop\\akJava\\InventoryApp\\src\\transactions.txt";
+    private static final String transactionFilePath = "C:\\Users\\Akshat.Pandey\\Desktop\\akJava\\InventoryApp\\src\\transactions.bin";
 
     public TransactionManager(ProductManager productManager) {
         this.productManager = productManager;
@@ -64,8 +64,7 @@ public class TransactionManager {
     }
     
     public void saveTransactions() {
-        FileHandler.saveToFile(transactionFilePath, transactions, 
-            t -> t.getTransactionId() + "," + t.getProductId() + "," + t.getType() + "," + t.getQuantity() + "," + t.getDate());
+        FileHandler.saveToFile(transactionFilePath, transactions);
     }
     
     public List<Transaction> getTransactions() {

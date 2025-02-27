@@ -7,17 +7,18 @@ import com.aurionpro.exceptions.InvalidProductIdException;
 
 public class ProductManager {
     private List<Product> products;
-    private static String filePath = "C:\\Users\\Akshat.Pandey\\Desktop\\akJava\\InventoryApp\\src\\products.txt";
+    private static String filePath = "C:\\Users\\Akshat.Pandey\\Desktop\\akJava\\InventoryApp\\src\\products.bin";
 
     public ProductManager() {
         this.products = FileHandler.loadProducts();
     }
 
-    public void addProduct(String name, String description, int quantity, double price) {
+    public int addProduct(String name, String description, int quantity, double price) {
         int id = IdManager.getNextId("product");
         Product product = new Product(id, name, description, quantity, price);
         products.add(product);
         saveProducts();
+        return id;
     }
 
     public Product getProductById(int id) throws InvalidProductIdException {
@@ -64,8 +65,7 @@ public class ProductManager {
     }
     
     public void saveProducts() {
-        FileHandler.saveToFile(filePath, products, 
-            p -> p.getId() + "," + p.getName() + "," + p.getDescription() + "," + p.getQuantity() + "," + p.getPrice());
+        FileHandler.saveToFile(filePath, products);
     }
 
 }

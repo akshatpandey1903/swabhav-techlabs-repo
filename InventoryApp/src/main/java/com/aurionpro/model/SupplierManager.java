@@ -8,7 +8,7 @@ import com.aurionpro.exceptions.InvalidSupplierIdException;
 
 public class SupplierManager {
 	private List<Supplier> suppliers;
-	private static final String filePath = "C:\\Users\\Akshat.Pandey\\Desktop\\akJava\\InventoryApp\\src\\suppliers.txt";
+	private static final String filePath = "C:\\Users\\Akshat.Pandey\\Desktop\\akJava\\InventoryApp\\src\\suppliers.bin";
 
     public SupplierManager() {
         this.suppliers = FileHandler.loadSuppliers();
@@ -65,8 +65,7 @@ public class SupplierManager {
     }
     
     public void saveSuppliers() {
-        FileHandler.saveToFile(filePath, suppliers, 
-            s -> s.getSupplierId() + "," + s.getName() + "," + s.getContactInfo());
+        FileHandler.saveToFile(filePath, suppliers);
     }
 
 }

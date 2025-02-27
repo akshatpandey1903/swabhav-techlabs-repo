@@ -6,13 +6,13 @@ import com.aurionpro.exceptions.InvalidSupplierIdException;
 import com.aurionpro.utility.Utility;
 import java.util.Scanner;
 
-public class InventoryMenu {
+public class InventoryFacade {
     private ProductManager productManager;
     private SupplierManager supplierManager;
     private TransactionManager transactionManager;
     private Scanner scanner;
 
-    public InventoryMenu() {
+    public InventoryFacade() {
         this.productManager = new ProductManager();
         this.supplierManager = new SupplierManager();
         this.transactionManager = new TransactionManager(productManager);
@@ -207,8 +207,8 @@ public class InventoryMenu {
         System.out.print("Enter Price: ");
         double price = scanner.nextDouble();
         scanner.nextLine();
-        productManager.addProduct(name, description, quantity, price);
-        System.out.println("Product added successfully!");
+        int id = productManager.addProduct(name, description, quantity, price);
+        System.out.println("Product added successfully with ID: " + id);
     }
 
     private void updateProduct() {
@@ -240,7 +240,7 @@ public class InventoryMenu {
         int id = scanner.nextInt();
         scanner.nextLine();
         try {
-			productManager.getProductById(id);
+			productManager.getSingleProduct(id);
 		} catch (InvalidProductIdException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error: " + e.getMessage());
@@ -261,6 +261,7 @@ public class InventoryMenu {
 		} catch (DuplicateSupplierException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error: " + e.getMessage());
+			return;
 		}
         System.out.println("Supplier added successfully!");
     }
