@@ -9,30 +9,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.aurionpro.db.Logic;
+
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     public LoginController() {
-        super();
+        
         // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Logic logic = new Logic();
 		RequestDispatcher dispatcher = null;
-		String loginType = request.getParameter("loginType");
+		String loginType = request.getParameter("role");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		
-		if(loginType.equalsIgnoreCase("customer"))
-			dispatcher = request.getRequestDispatcher("/CustomerDashboard.jsp");
-		if(loginType.equalsIgnoreCase("admin"))
-			dispatcher = request.getRequestDispatcher("/AdminDashboard.jsp");
-		
-		request.setAttribute("name", "Akshat");
+		String role = logic.checkCredentials(username, password);
+		if(role == null) {
+			dispatcher = request.getRequestDispatcher("/Error.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(role.equalsIgnoreCase(loginType)) {
+			if(role.equalsIgnoreCase("customer")) {
+				dispatcher = request.getRequestDispatcher("/CustomerDashboard.jsp");
+			} else if (role.equalsIgnoreCase("admin")) {
+				dispatcher = request.getRequestDispatcher("/AdminDashboard.jsp");
+			}
+			dispatcher.forward(request, response);
+		}
+		dispatcher = request.getRequestDispatcher("/RoleError.jsp");
 		dispatcher.forward(request, response);
-		
-		;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

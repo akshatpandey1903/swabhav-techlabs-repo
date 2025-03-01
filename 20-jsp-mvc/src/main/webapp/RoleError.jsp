@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>Customer Dashboard</h2>
+	<h1>Wrong role selected</h1>
 </body>
 </html>

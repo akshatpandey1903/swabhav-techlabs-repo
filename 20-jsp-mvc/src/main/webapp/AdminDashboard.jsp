@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>Customer Dashboard</h2>
-<%= request.getAttribute("name") %>
+<h2>Admin Dashboard</h2>
 </body>
 </html>
