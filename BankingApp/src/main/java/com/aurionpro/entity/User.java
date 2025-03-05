@@ -17,7 +17,17 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public int getUserId() {
+    public User(String username, String password, String email, String role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.email = email;
+	}
+
+
+
+	public int getUserId() {
         return userId;
     }
 

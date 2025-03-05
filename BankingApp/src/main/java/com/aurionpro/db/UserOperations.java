@@ -73,21 +73,30 @@ public class UserOperations {
         return users;
     }
     
-    public boolean validateUser(String username, String password, String role) {
-    	   String query = "SELECT * FROM users WHERE username=? AND password=? AND role=?";
-    	   try {
-    	       PreparedStatement ps = connection.prepareStatement(query);
-    	       ps.setString(1, username);
-    	       ps.setString(2, password);
-    	       ps.setString(3, role);
-    	       ResultSet rs = ps.executeQuery();
-    	       return rs.next();
-    	   } catch (SQLException e) {
-    	       e.printStackTrace();
-    	   }
-    	   return false;
-    	}
+    public User authenticateUser(String username, String password, String role) {
+    	User user = null;
+    	try {
+    		String query = "SELECT * FROM users WHERE username=? AND password=? AND role=?";
+    		PreparedStatement stmt = connection.prepareStatement(query);
+    		stmt.setString(1, username);
+    		stmt.setString(2, password);
+    		stmt.setString(3, role);
+    		ResultSet rs = stmt.executeQuery();
 
+    		if (rs.next()) {
+    			user = new User(
+    					rs.getInt("user_id"), 
+    					rs.getString("username"), 
+    					rs.getString("password"),
+    					rs.getString("role"), 
+    					rs.getString("email"),
+    					rs.getString("created_at"));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return user;
+    }
 
 
 
