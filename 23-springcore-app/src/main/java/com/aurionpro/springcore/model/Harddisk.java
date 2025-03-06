@@ -1,7 +1,12 @@
 package com.aurionpro.springcore.model;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Harddisk {
 	
+	@Value("512")
 	private int capacity;
 
 	public Harddisk(int capacity) {
