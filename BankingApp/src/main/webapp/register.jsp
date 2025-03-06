@@ -38,7 +38,7 @@
         </div>
         <button type="submit" class="btn btn-success">Register</button>
     </form>
-    <a href="HomeController?page=login" class="btn btn-primary mt-3">Back to Login</a>
+    <a href="HomeController?page=login" class="btn btn-danger mt-3">Back to Login</a>
 </div>
 </body>
 </html>

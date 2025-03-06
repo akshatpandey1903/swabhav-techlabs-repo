@@ -21,7 +21,7 @@
 
 
 <div class="container mt-5">
-   <h1 class="mb-5 text-white text-center">Welcome to ProBank</h1>
+   <h1 class="mb-5 text-white text-center">Welcome to  Swabhav Bank</h1>
    <div class="row">
        <div class="col-md-4 mb-4">
            <div class="card feature-card">

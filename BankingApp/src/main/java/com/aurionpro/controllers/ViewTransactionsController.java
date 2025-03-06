@@ -2,7 +2,6 @@ package com.aurionpro.controllers;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,42 +13,28 @@ import javax.servlet.http.HttpSession;
 import com.aurionpro.db.TransactionOperations;
 import com.aurionpro.entity.Transaction;
 
-@WebServlet("/AdminHomeController")
-public class AdminHomeController extends HttpServlet {
+@WebServlet("/ViewTransactionsController")
+public class ViewTransactionsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public AdminHomeController() {
-		super();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String role = (String) session.getAttribute("role");
-
 		if (role == null || !role.equals("admin")) {
 			response.sendRedirect("login.jsp");
 			return;
 		}
 
-		String page = request.getParameter("page");
-		RequestDispatcher dispatcher = null;
+		String type = request.getParameter("type");
+		String sort = request.getParameter("sort");
+		String order = request.getParameter("order");
 
-		if (page == null || page.equals("home")) {
-			dispatcher = request.getRequestDispatcher("/adminHome.jsp");
-		} else if (page.equals("addCustomer")) {
-			dispatcher = request.getRequestDispatcher("/addCustomer.jsp");
-		} else if (page.equals("addAccount")) {
-			dispatcher = request.getRequestDispatcher("/addAccount.jsp");
-		} else if (page.equals("viewCustomers")) {
-			response.sendRedirect("ViewCustomersController");
-			return;
-		} else if (page.equals("viewTransactions")) {
-			TransactionOperations transaction = new TransactionOperations();
-			List<Transaction> transactions = transaction.getTransactions();
-			request.setAttribute("transactions", transactions);
-			dispatcher = request.getRequestDispatcher("/viewTransactions.jsp");
-		}
+		TransactionOperations transactionOps = new TransactionOperations();
+		List<Transaction> transactions = transactionOps.getFilteredTransactions(type, sort, order);
 
+		request.setAttribute("transactions", transactions);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/viewTransactions.jsp");
 		dispatcher.forward(request, response);
 	}
 

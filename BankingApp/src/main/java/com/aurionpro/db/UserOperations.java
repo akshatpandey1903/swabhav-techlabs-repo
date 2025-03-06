@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aurionpro.entity.Account;
 import com.aurionpro.entity.User;
 
 public class UserOperations {
@@ -98,7 +99,83 @@ public class UserOperations {
     	return user;
     }
 
+    public List<User> getAllCustomersSortedByUsername() {
+    	List<User> customerList = new ArrayList<>();
+    	try{
+    		String sql = "SELECT * FROM users WHERE role='customer' ORDER BY username";
+    		PreparedStatement pst = connection.prepareStatement(sql);
+    		ResultSet rs = pst.executeQuery();
+    		while (rs.next()) {
+    			customerList.add(new User(
+    					rs.getInt("user_id"),
+    					rs.getString("username"),
+    					rs.getString("password"),
+    					rs.getString("role"),
+    					rs.getString("email"),
+    					rs.getString("created_at")));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return customerList;
+    }
 
+    public List<User> searchCustomers(String keyword) {
+    	List<User> customerList = new ArrayList<>();
+    	try {
+    		String sql = "SELECT * FROM users WHERE role='customer' AND username LIKE ?";
+    		PreparedStatement pst = connection.prepareStatement(sql);
+    		pst.setString(1, "%" + keyword + "%");
+    		ResultSet rs = pst.executeQuery();
+    		while (rs.next()) {
+    			customerList.add(new User(
+    					rs.getInt("user_id"),
+    					rs.getString("username"),
+    					rs.getString("password"),
+    					rs.getString("role"),
+    					rs.getString("email"),
+    					rs.getString("created_at")));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return customerList;
+    }
+    
+    public boolean updateUser(User user) {
+    	String query = "UPDATE users SET email = ?, password = ? WHERE user_id = ?";
+    	try (PreparedStatement stmt = connection.prepareStatement(query)) {
+    		stmt.setString(1, user.getEmail());
+    		stmt.setString(2, user.getPassword());
+    		stmt.setInt(3, user.getUserId());
+    		int rows = stmt.executeUpdate();
+    		return rows > 0;
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+    	return false;
+    }
+    
+    public List<Account> getAccountsByUserId(int userId) {
+    	List<Account> accounts = new ArrayList<>();
+    	String query = "SELECT * FROM accounts WHERE user_id = ?";
+    	try (PreparedStatement stmt = connection.prepareStatement(query)) {
+    		stmt.setInt(1, userId);
+    		ResultSet rs = stmt.executeQuery();
+    		while (rs.next()) {
+    			Account account = new Account(
+    					rs.getInt("account_no"),
+    					rs.getInt("user_id"),
+    					rs.getDouble("balance"),
+    					rs.getString("created_at")
+    			);
+    			accounts.add(account);
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return accounts;
+    }
 
 }
 
